@@ -1,0 +1,9 @@
+<%= tinymce_assets %>
+
+<%= form_for @note, url: {action: "create"} do |f| %>
+    <%= f.text_field :title %> 
+    <%= f.text_area :note, class: "tinymce" %>
+    <%= f.submit "Create" %>
+<% end %>
+
+<%= tinymce %>
