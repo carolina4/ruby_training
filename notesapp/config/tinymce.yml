@@ -1,6 +1,17 @@
 toolbar:
-  - styleselect | bold italic | undo redo
-  - image | link
+  - fontselect | fontsizeselect | bold italic underline | alignleft aligncenter alignjustify alignright
+  - bullist | numlist | outdent | indent | forecolor | backcolor | undo | redo | link | unlink
+
+menubar: false
+
 plugins:
-  - image
   - link
+  - paste
+  - importcss
+  - autolink
+  - lists
+  - wordcount
+  - colorpicker
+  - textcolor
+
+height : "250"
