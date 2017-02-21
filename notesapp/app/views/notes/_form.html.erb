@@ -1,6 +1,6 @@
 <%= tinymce_assets %>
 
-<% if @note.errors.any? %>
+<% if note.errors.any? %>
     <div class="alert alert-danger alert-dismissable">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <strong>Error!</strong> <%= @note.errors.full_messages.first %>
@@ -8,10 +8,18 @@
 <% end %>
 
 <div class="content">
+    <a id="back" href="<%= notes_path %>">
+        &hookleftarrow; Back to All Notes
+    </a>
+
     <%= form_for (note) do |f| %>
         <%= f.text_field :title, class: "form-control", placeholder: "Title" %> 
         <%= f.text_area :note, class: "tinymce" %>
         <%= f.submit "Submit", class: "btn btn-default" %>
+
+        <% if include_delete %>
+            <%= link_to 'Delete', note, method: :delete, data: {confirm: "Are you sure you want to delete this note?"}, class: "btn btn-default float-right" %>
+        <% end %>
     <% end %>
 </div>
 
