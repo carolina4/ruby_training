@@ -20,49 +20,49 @@ describe Card do
 	end
 
 	context 'equality' do
-		it 'is equal to itself' do
-			subject = card(suit: :spades, rank: 4)
-			other   = card(suit: :spades, rank: 4)
-
-			raise unless subject == other
+		def subject
+			@subject ||= card(suit: :spades, rank: 4)
 		end
 
-		it 'is hash equal to itself' do
-			subject = card(suit: :spades, rank: 4)
-			other   = card(suit: :spades, rank: 4)
+		describe 'comparing against self' do
+			def other
+				@other ||= card(suit: :spades, rank: 4)
+			end
 
-			raise unless Set.new([subject, other]).size == 1
+			it 'is equal' do
+				raise unless subject == other
+			end
+
+			it 'is hash equal' do
+				raise unless Set.new([subject, other]).size == 1
+			end
 		end
 
 		describe 'comparing to a card of a different suit' do
-			it 'is not equal' do
-				subject = card(suit: :spades, rank: 4)
-				other   = card(suit: :hearts, rank: 4)
+			def other
+				@other ||= card(suit: :hearts, rank: 4)
+			end
 
+			it 'is not equal' do
 				raise unless subject != other
 			end
 
 			it 'is not hash equal' do
-				subject = card(suit: :spades, rank: 4)
-				other   = card(suit: :hearts, rank: 4)
-
 				raise unless Set.new([subject, other]).size == 2
 			end
 		end
 
 		describe 'comparing to a card of a different rank' do
-			it 'is not equal' do
-				subject = card(suit: :spades, rank: 4)
-				other   = card(suit: :spades, rank: 5)
+			def other
+				@other ||= card(suit: :spades, rank: 5)
+			end
 
+			it 'is not equal' do
 				raise unless subject != other
 			end
 
 
 			it 'is not hash equal' do
-				subject = card(suit: :spades, rank: 4)
-				other   = card(suit: :spades, rank: 5)
-
 				raise unless Set.new([subject, other]).size == 2
 			end
 		end
