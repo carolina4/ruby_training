@@ -1,3 +1,4 @@
+=begin
 require 'tmpdir'
 require 'pty'
 
@@ -25,3 +26,4 @@ describe 'CLI' do
 		end
 	end
 end
+=end
