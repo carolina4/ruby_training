@@ -22,7 +22,8 @@ describe 'CLI' do
 			sleep 0.5
 
 			buffer = output.read_nonblock(1024)
-			raise unless buffer.include?("You won") || buffer.include?("You lost")
+			#raise unless buffer.include?("You won") || buffer.include?("You lost")
+			expect(buffer).to include("You won").or include("You lost")
 		end
 	end
 end

@@ -38,4 +38,31 @@ class Card
 	def eql?(other)
 		self == other
 	end
+
+	def to_json
+		{
+			rank: rank,
+			suit: suit
+		}.to_json
+	end
+
+	def self.from_string(value)
+		short_suit = value[-1]
+
+		suit = {
+			"H" => :hearts,
+			"D" => :diamonds,
+			"S" => :spades,
+			"C" => :clubs
+		}.fetch(short_suit)
+
+		rank = {
+			"A" => :ace,
+			"K" => :king,
+			"Q" => :queen,
+			"J" => :jack
+		}.fetch(value[0]) { value[0..-2].to_i }
+
+		Card.build(suit, rank)
+	end
 end
