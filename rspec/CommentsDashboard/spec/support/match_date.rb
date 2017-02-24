@@ -3,11 +3,13 @@ RSpec::Matchers.define :match_date do |expected_string|
         format_date(actual) == expected_string
     end
 
-    failure_message do |actual|
+    #failure_message do |actual|
+    failure_message_for_should do |actual|
         "expected that '#{format_date(actual)}' would match '#{expected_string}'"
     end
 
-    failure_message_when_negated do |actual|
+    #failure_message_when_negated do |actual|
+    failure_message_for_should_not do |actual|
         "expected that '#{format_date(actual)}' would not match '#{expected_string}'"
     end
 
