@@ -17,7 +17,7 @@ module Wordpress
             end
 
             def parse xml
-                doc = Nokogiri::XML xml
+                doc = Nokogiri::XML(xml) { |config| config.strict }
                 doc.search('item').map do |doc_item|
                     item = {}
                     item[:link] = doc_item.at('link').text
@@ -33,6 +33,7 @@ module Wordpress
             def get url
                 File.read(File.join('spec', 'fixtures', 'feed.xml'))
             end
+
         end
     end
 end

@@ -47,15 +47,45 @@ describe Wordpress::Comments::Client do
     end
 
     describe "#fetch" do
-        
+
         let(:comments) { client.fetch }
 
-        before(:each) do
-            client.stub(:get).and_return(xml)
+        context "success" do
+
+            before(:each) do
+                client.stub(:get).and_return(xml)
+            end
+
+            it "build comment objects" do
+                expect(comments.length).to eq 30
+            end
+
         end
 
-        it "build comment objects" do
-            expect(comments.length).to eq 30
+        context "bad URL" do
+        
+            let(:client) { Wordpress::Comments::Client.new 'not a URL' }
+
+            #it "raises error" do
+            #    expect {
+            #        client.fetch
+            #    }.to raise_error(Errno::ENOENT)
+            #end
+
+        end
+
+        context "bad XML" do
+        
+            before(:each) do
+                client.stub(:get).and_return("BAD XML!")
+            end
+
+            it "raises error" do
+                expect {
+                    client.fetch
+                }.to raise_error(Nokogiri::XML::SyntaxError)
+            end
+
         end
 
     end
