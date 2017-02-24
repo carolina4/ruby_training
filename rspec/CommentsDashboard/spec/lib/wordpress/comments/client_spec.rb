@@ -4,6 +4,8 @@ require_relative '../../../support/match_date'
 describe Wordpress::Comments::Client do
 
     let(:client) { Wordpress::Comments::Client.new 'http://masable.com/comments/feed' }
+    let(:xml) { File.read(File.join('spec', 'fixtures', 'feed.xml')) }
+
 
     describe "#initialize" do
 
@@ -15,8 +17,6 @@ describe Wordpress::Comments::Client do
 
     describe "#parse" do
 
-        let(:xml) { File.read(File.join('spec', 'fixtures', 'feed.xml')) }
-        
         let(:comments) { client.parse xml }
         let(:comment) { comments.first }
 
@@ -42,6 +42,20 @@ describe Wordpress::Comments::Client do
         it "extracts the date (redux)" do
             # Tue, 27 Nov 2007 20:25:08 +0000
             expect(comment[:date]).to match_date '2007-11-27'
+        end
+
+    end
+
+    describe "#fetch" do
+        
+        let(:comments) { client.fetch }
+
+        before(:each) do
+            client.stub(:get).and_return(xml)
+        end
+
+        it "build comment objects" do
+            expect(comments.length).to eq 30
         end
 
     end

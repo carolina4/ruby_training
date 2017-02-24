@@ -11,6 +11,11 @@ module Wordpress
                 @url = url
             end
 
+            def fetch
+                xml = get @url
+                parse xml
+            end
+
             def parse xml
                 doc = Nokogiri::XML xml
                 doc.search('item').map do |doc_item|
@@ -21,6 +26,12 @@ module Wordpress
                     item[:date] = DateTime.parse doc_item.at('pubDate').text
                     item
                 end
+            end
+
+            private
+
+            def get url
+                File.read(File.join('spec', 'fixtures', 'feed.xml'))
             end
         end
     end
