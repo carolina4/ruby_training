@@ -3,14 +3,14 @@ require_relative '../../../support/match_date'
 
 describe Wordpress::Comments::Client do
 
-    let(:client) { Wordpress::Comments::Client.new 'http://masable.com/comments/feed' }
+    let(:client) { Wordpress::Comments::Client.new 'http://mashable.com/comments/feed' }
     let(:xml) { File.read(File.join('spec', 'fixtures', 'feed.xml')) }
 
 
     describe "#initialize" do
 
         it "stores a URL" do
-            expect(client.url).to eq 'http://masable.com/comments/feed'
+            expect(client.url).to eq 'http://mashable.com/comments/feed'
         end
 
     end
