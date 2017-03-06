@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "Home Page" do
     describe "GET /" do
@@ -28,16 +28,43 @@ describe "Home Page" do
 
         context "populated database" do
 
+            fixtures :blogs
+
             before(:each) do
                 visit '/'
             end
 
-            it "show a list of blogs" do
-                pending "Need to wirte unit tests and Blog model first."
+            it "shows a list of blogs" do
+                #save_and_open_page
                 expect(page).to have_selector 'li a', text:'Mashable'
             end
 
         end
 
     end
+
+    describe "POST /blogs" do
+
+        before :each do
+            stub_network
+
+            visit '/'
+            fill_in "Blog title", with: "Example"
+            fill_in "Comments feed url", with: "http://example.com/comments/feed"
+            click_on "Create"
+        end
+        
+        let(:blog) { Blog.find_by permalink: 'example'}
+
+        it "creates a valid record" do
+            expect(blog).to be_valid
+        end
+
+        it "preloads comments" do
+            expect(blog.comments.length).to eq 30
+        end
+
+    end
+
+
 end
